@@ -27,7 +27,15 @@ def load_json(file_path):
         with open(file_path, 'r', encoding='utf-8') as file:
             return json.load(file)
     except (FileNotFoundError, json.JSONDecodeError):
-        return []                 
+        return []
+
+def setup_files():
+    """create starter data files if they do not exist"""
+    DATA_DIR.mkdir(exist_ok=True)
+    if not MEMBERS_FILE.exists():
+        save_json(MEMBERS_FILE, [])
+    if not BOOK_FILE.exists():
+        save_json(BOOK_FILE, [])                             
 
 
 
