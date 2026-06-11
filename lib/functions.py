@@ -10,6 +10,10 @@ from models.book import Book
 from models.member import Member
 from models.review import Review
 
+DATA_DIR = Path("data")
+MEMBER_FILE = DATA_DIR / "members.json"
+BOOK_FILE = DATA_DIR / "books.json"
+
 
 
 
