@@ -27,3 +27,6 @@ class Review:
         if value not in self.allowed_statuses:
             raise ValueError("Status must be reading, finished, or dropped.")
         self._status = value
+ def mark_finished(self):
+        """Mark this review/book as finished."""
+        self.status = "finished"
