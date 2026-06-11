@@ -37,6 +37,13 @@ def setup_files():
     if not BOOK_FILE.exists():
         save_json(BOOK_FILE, [])
 
+def load_members():
+    """ load saved members"""
+    return [Member.from_dict(item) for item in load_json(MEMBERS_FILE)]
+
+
+
+
 def load_book():
     # load saved books
     return [Book.from_dict(item) for item in load_json(BOOKS_FILE)]     
@@ -52,7 +59,11 @@ def find_book(books,title, member_name=''):
         same_member = not member_name or book.lower() == member_name.lower()
         if same_title and same_member:
             return book
-    return None                  
+    return None  
+
+def add_book(args):
+    # cli action to add a book for a member
+    pass                    
 
 
 
