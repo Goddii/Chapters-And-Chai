@@ -33,3 +33,15 @@ class Book:
             "genre": self.genre,
             "reviews": [review.to_dict() for review in self.reviews],
         }
+    
+    @classmethod
+    def from_dict(cls, data):
+        reviews = [Review.from_dict(review) for review in data.get("reviews", [])]
+        return cls(
+            data["title"],
+            data["author"],
+            data["member"],
+            data.get("due_date", ""),
+            data.get("genre", ""),
+            reviews,
+        )
