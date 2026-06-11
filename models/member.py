@@ -48,7 +48,7 @@ class Member:
         return cls(
             data["name"],
             data["email"],
-            data.get("book", []),
+            data.get("books", []),
         )
 
     def __str__(self):
