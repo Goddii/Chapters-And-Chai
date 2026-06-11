@@ -166,7 +166,30 @@ def list_books(args):
 
     console.print(table)                  
 
+def add_review(args):
+    """CLI action: add a review to a book."""
+    members = load_members()
+    books = load_books()
+    book = find_book(books, args.book, args.member)
 
+    if not book:
+        console.print(f"[red]Book not found:[/red] {args.book}")
+        return
+
+    assigned_to = args.assigned_to or args.member or book.member
+    if not find_member(members, assigned_to):
+        console.print(f"[red]Assigned member not found:[/red] {assigned_to}")
+        return
+
+    try:
+        review = Review(args.rating, args.notes, args.status, assigned_to)
+    except ValueError as error:
+        console.print(f"[red]{error}[/red]")
+        return
+
+    book.add_review(review)
+    save_books(books)
+    console.print(f"[green]Added review for {book.title}:[/green] {review}")
 
 
 
