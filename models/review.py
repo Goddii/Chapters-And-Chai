@@ -47,3 +47,5 @@ def to_dict(self):
             data.get("status", "reading"),
             data.get("assigned_to", ""),
         )
+  def __str__(self):
+        return f"{self.rating}/5 - {self.status} - {self.notes}"       
