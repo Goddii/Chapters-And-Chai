@@ -47,3 +47,16 @@ def buid_parser():
     complete_book_parser.add_argument("--book", required=True)
     complete_book_parser.add_argument("--member", required=True)
     complete_book_parser.set_defaults(func=complete_book)
+
+
+    return parser
+
+def main():
+    setup_files()
+    parser = build_parser()
+    args = parser.parse_args()
+    args.func(args)
+
+
+if __name__ == "__main__":
+    main()        
