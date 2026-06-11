@@ -24,6 +24,17 @@ class Book:
     def add_review(self, review):
         self.reviews.append(review)
 
+    def complete_for_member(self, member_name):
+        """Mark a member's review as finished, or create one if needed."""
+        for review in self.reviews:
+            if review.assigned_to == member_name:
+                review.mark_finished()
+                return review
+
+        review = Review(5, "Completed book.", "finished", member_name)
+        self.add_review(review)
+        return review
+
     def to_dict(self):
         return {
             "title": self.title,
@@ -47,7 +58,6 @@ class Book:
         )
 
     def __str__(self):
-        """."""
         due_text = f", due {self.due_date}" if self.due_date else ""
         genre_text = f", {self.genre}" if self.genre else ""
         return f"{self.title} by {self.author} ({self.member}{genre_text}{due_text})"
