@@ -191,8 +191,40 @@ def add_review(args):
     save_books(books)
     console.print(f"[green]Added review for {book.title}:[/green] {review}")
 
+   def list_reviews(args):
+    """CLI action: list reviews for one book."""
+    book = find_book(load_books(), args.book, args.member)
+    if not book:
+        console.print(f"[red]Book not found:[/red] {args.book}")
+        return
+
+    table = Table(title=f"Reviews for {book.title}")
+    for heading in ["Rating", "Status", "Assigned To", "Notes"]:
+        table.add_column(heading)
+
+    for review in book.reviews:
+        table.add_row(str(review.rating), review.status, review.assigned_to, review.notes)
+
+    console.print(table) 
 
 
+def complete_book(args):
+    """CLI action: mark a book as finished for a member."""
+    members = load_members()
+    books = load_books()
+
+    if not find_member(members, args.member):
+        console.print(f"[red]Member not found:[/red] {args.member}")
+        return
+
+    book = find_book(books, args.book, args.member)
+    if not book:
+        console.print(f"[red]Book not found for {args.member}:[/red] {args.book}")
+        return
+
+    book.complete_for_member(args.member)
+    save_books(books)
+    console.print(f"[green]Completed book:[/green] {book.title} for {args.member}")
 
 
 
