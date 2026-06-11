@@ -117,7 +117,31 @@ def add_member(args):
         table.add_row(member.name, member.email, str(len(member.books)))
 
     console.print(table)       
+def add_book(args):
+    """CLI action: add a book for a member."""
+    members = load_members()
+    books = load_books()
+    member = find_member(members, args.member)
 
+    if not member:
+        console.print(f"[red]Member not found:[/red] {args.member}")
+        return
+    if find_book(books, args.title, args.member):
+        console.print(f"[red]Book already exists:[/red] {args.title}")
+        return
+
+    try:
+        due_date = format_due_date(args.due_date)
+    except ValueError:
+        console.print("[red]Could not understand that due date.[/red]")
+        return
+
+    book = Book(args.title, args.author, member.name, due_date, args.genre)
+    books.append(book)
+    member.add_book(book.title)
+    save_books(books)
+    save_members(members)
+    console.print(f"[green]Added book:[/green] {book}")
 
 
 def add_book(args):
