@@ -35,7 +35,29 @@ def setup_files():
     if not MEMBERS_FILE.exists():
         save_json(MEMBERS_FILE, [])
     if not BOOK_FILE.exists():
-        save_json(BOOK_FILE, [])                             
+        save_json(BOOK_FILE, [])
+
+def load_book():
+    # load saved books
+    return [Book.from_dict(item) for item in load_json(BOOKS_FILE)]     
+
+def save_book(books):
+    # save book objects
+    save_json(BOOK_FILE, [book.to_dict() for book in books]) 
+
+def find_book(books,title, member_name=''):
+    # find a book by title with optional member filter
+    for book in books:
+        same_title = book.title.lower() == title.lower()
+        same_member = not member_name or book.lower() == member_name.lower()
+        if same_title and same_member:
+            return book
+    return None                  
+
+
+
+
+
 
 
 
