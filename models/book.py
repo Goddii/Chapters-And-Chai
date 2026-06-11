@@ -45,3 +45,9 @@ class Book:
             data.get("genre", ""),
             reviews,
         )
+
+    def __str__(self):
+        """."""
+        due_text = f", due {self.due_date}" if self.due_date else ""
+        genre_text = f", {self.genre}" if self.genre else ""
+        return f"{self.title} by {self.author} ({self.member}{genre_text}{due_text})"
