@@ -1,6 +1,7 @@
 import pytest
 
 from models.book import Book
+from models.review import Review
 
 def test_book_can_have_many_reviews():
     book = Book("Dune", "Herbert", "John")

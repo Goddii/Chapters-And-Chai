@@ -1,3 +1,5 @@
+from models.review import Review
+
 class Book:
 
     book_count = 0

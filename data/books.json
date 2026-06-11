@@ -1,0 +1,47 @@
+[
+    {
+        "title": "The River and the Source",
+        "author": "Margaret A Ogola",
+        "member": "Godwin",
+        "due_date": "2027-12-25",
+        "genre": "Historical Fiction",
+        "reviews": [
+            {
+                "rating": 5,
+                "notes": "was too woke",
+                "status": "reading",
+                "assigned_to": "John"
+            },
+            {
+                "rating": 5,
+                "notes": "Completed book.",
+                "status": "finished",
+                "assigned_to": "Godwin"
+            }
+        ]
+    },
+    {
+        "title": "A Grain of Wheat",
+        "author": "Ngugi wa Thiongo",
+        "member": "John",
+        "due_date": "2027-12-25",
+        "genre": "Cultural Heritage",
+        "reviews": []
+    },
+    {
+        "title": "Kidagaa Kimemwozea",
+        "author": "Ken Walibora",
+        "member": "Jeremy",
+        "due_date": "2027-12-25",
+        "genre": "Swahili literature",
+        "reviews": []
+    },
+    {
+        "title": "Dust",
+        "author": "Yvonne A",
+        "member": "Teresia",
+        "due_date": "2027-12-25",
+        "genre": "Contemporary Fiction",
+        "reviews": []
+    }
+]
