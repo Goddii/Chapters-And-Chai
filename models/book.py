@@ -20,3 +20,6 @@ class Book:
         if not value or not value.strip():
             raise ValueError("Book author cannot be empty.")
         self._author = value.strip()
+
+    def add_review(self, review):
+        self.reviews.append(review)
