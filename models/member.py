@@ -48,8 +48,9 @@ class Member:
         return cls(
             data["name"],
             data["email"],
-            data.get("books", []),
+            data.get("book", []),
         )
 
     def __str__(self):
         return f"{self.name} ({self.email}) - {len(self.books)} book(s)"
+    
