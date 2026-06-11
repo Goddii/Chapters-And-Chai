@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Godwin",
+        "email": "godwin@gmail.com",
+        "books": [
+            "The River and the Source"
+        ]
+    },
+    {
+        "name": "John",
+        "email": "john@gmail.com",
+        "books": [
+            "A Grain of Wheat"
+        ]
+    },
+    {
+        "name": "Teresia",
+        "email": "Teresia@gmail.com",
+        "books": [
+            "Dust"
+        ]
+    },
+    {
+        "name": "Jeremy",
+        "email": "jeremya@gmail.com",
+        "books": [
+            "Kidagaa Kimemwozea"
+        ]
+    }
+]

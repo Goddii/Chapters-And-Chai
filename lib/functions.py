@@ -1,8 +1,8 @@
 from datetime import date, timedelta
 import json
-import pathlib import Path
+from pathlib import Path
 
-from dateutils import parser as date_parser
+from dateutil import parser as date_parser
 from rich.console import Console
 from rich.table import Table
 
@@ -13,6 +13,7 @@ from models.review import Review
 DATA_DIR = Path("data")
 MEMBER_FILE = DATA_DIR / "members.json"
 BOOK_FILE = DATA_DIR / "books.json"
+console = Console()
 
 
 def save_json(file_path, data):
@@ -32,23 +33,23 @@ def load_json(file_path):
 def setup_files():
     """create starter data files if they do not exist"""
     DATA_DIR.mkdir(exist_ok=True)
-    if not MEMBERS_FILE.exists():
-        save_json(MEMBERS_FILE, [])
+    if not MEMBER_FILE.exists():
+        save_json(MEMBER_FILE, [])
     if not BOOK_FILE.exists():
         save_json(BOOK_FILE, [])
 
 def load_members():
     """ load saved members"""
-    return [Member.from_dict(item) for item in load_json(MEMBERS_FILE)]
+    return [Member.from_dict(item) for item in load_json(MEMBER_FILE)]
 
 def save_members(members):
     """ save member object """
-    save_json(MEMBERS_FILE, [member.to_dict() for member in member])
+    save_json(MEMBER_FILE, [member.to_dict() for member in members])
 
 
 def load_book():
     # load saved books
-    return [Book.from_dict(item) for item in load_json(BOOKS_FILE)]     
+    return [Book.from_dict(item) for item in load_json(BOOK_FILE)]     
 
 def save_books(books):
     # save book objects
@@ -57,7 +58,7 @@ def save_books(books):
 def find_member(members, name):
     """ find member by name """
     for member in members:
-        if member.lower() == members.lower():
+        if member.name.lower() == name.lower():
             return member
     return None
 
@@ -67,33 +68,34 @@ def find_book(books,title, member_name=''):
     # find a book by title with optional member filter
     for book in books:
         same_title = book.title.lower() == title.lower()
-        same_member = not member_name or book.lower() == member_name.lower()
+        same_member = not member_name or book.member.lower() == member_name.lower()
         if same_title and same_member:
             return book
     return None  
 
 def format_due_date(text):
-    """ format simple date words or normal dates"""
+    """Format simple date words or normal dates as YYYY-MM-DD."""
     if not text:
-        return ''
+        return ""
 
     text = text.lower().strip()
     today = date.today()
 
     if text == "today":
         return today.isoformat()
-
     if text == "tomorrow":
-        return (today + timedelta(days=1).isoformat())
-    if text.startswith("next"):
-        weekdays =["monday", "tuesday","wednesday","thursday","friday","saturday","sunday"]
+        return (today + timedelta(days=1)).isoformat()
+    if text.startswith("next "):
+        weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+        day_name = text.replace("next ", "", 1)
         if day_name in weekdays:
-            days_ahead = weekdays.index(day_name) - today.weeday()
+            days_ahead = weekdays.index(day_name) - today.weekday()
             if days_ahead <= 0:
                 days_ahead += 7
             return (today + timedelta(days=days_ahead)).isoformat()
 
-    return date_parser.parse(text).date().isoformat()               
+    return date_parser.parse(text).date().isoformat()
+             
 
 def add_member(args):
     """cli to add members"""
@@ -106,7 +108,7 @@ def add_member(args):
     save_members(members)
     console.print(f"[green]Added member:[/green] {member}")
 
- def list_members(args):
+def list_members(args):
     """CLI action: list members."""
     table = Table(title="Members")
     table.add_column("Name")
@@ -120,7 +122,7 @@ def add_member(args):
 def add_book(args):
     """CLI action: add a book for a member."""
     members = load_members()
-    books = load_books()
+    books = load_book()
     member = find_member(members, args.member)
 
     if not member:
@@ -135,7 +137,6 @@ def add_book(args):
     except ValueError:
         console.print("[red]Could not understand that due date.[/red]")
         return
-
     book = Book(args.title, args.author, member.name, due_date, args.genre)
     books.append(book)
     member.add_book(book.title)
@@ -146,7 +147,7 @@ def add_book(args):
 
 def list_books(args):
     """CLI action: list books."""
-    books = load_books()
+    books = load_book()
     if args.member:
         books = [book for book in books if book.member.lower() == args.member.lower()]
 
@@ -169,7 +170,7 @@ def list_books(args):
 def add_review(args):
     """CLI action: add a review to a book."""
     members = load_members()
-    books = load_books()
+    books = load_book()
     book = find_book(books, args.book, args.member)
 
     if not book:
@@ -191,9 +192,9 @@ def add_review(args):
     save_books(books)
     console.print(f"[green]Added review for {book.title}:[/green] {review}")
 
-   def list_reviews(args):
+def list_reviews(args):
     """CLI action: list reviews for one book."""
-    book = find_book(load_books(), args.book, args.member)
+    book = find_book(load_book(), args.book, args.member)
     if not book:
         console.print(f"[red]Book not found:[/red] {args.book}")
         return
@@ -211,7 +212,7 @@ def add_review(args):
 def complete_book(args):
     """CLI action: mark a book as finished for a member."""
     members = load_members()
-    books = load_books()
+    books = load_book()
 
     if not find_member(members, args.member):
         console.print(f"[red]Member not found:[/red] {args.member}")
