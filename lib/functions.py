@@ -21,6 +21,14 @@ def save_json(file_path, data):
     with open(file_path, 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=4)
 
+def load_json(file_path):
+    """ load json data.if file is missing or broken return an empty"""
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            return json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []                 
+
 
 
 
