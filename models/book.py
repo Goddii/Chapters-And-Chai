@@ -10,3 +10,13 @@ class Book:
         self.genre = genre
         self.reviews = reviews or []
         Book.book_count += 1
+
+    @property
+    def author(self):
+        return self._author
+
+    @author.setter
+    def author(self, value):
+        if not value or not value.strip():
+            raise ValueError("Book author cannot be empty.")
+        self._author = value.strip()
