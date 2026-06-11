@@ -38,3 +38,12 @@ def to_dict(self):
             "status": self.status,
             "assigned_to": self.assigned_to,
         }
+  @classmethod
+    def from_dict(cls, data):
+        """Create a Review object from data loaded from JSON."""
+        return cls(
+            data["rating"],
+            data.get("notes", ""),
+            data.get("status", "reading"),
+            data.get("assigned_to", ""),
+        )
