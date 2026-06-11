@@ -17,4 +17,10 @@ def buid_parser():
     add_member_parser.set_defaults(func=add_member)
 
 
-    list_member
+    list_members_parser = subparsers.add_parser("list-members", help="List members")
+
+    add_book_parser = subparser.add_parser("add-book", help='Add a book')
+    add_book_parser.add_argument("--member", required=True)
+    add_book_parser.add_argument("--title", required=True)add_book_parser.add_argument("--author", required=True)add_book_parser.add_argument("--due-date", required=True)
+    add_book_parser.add_argument("--genre", default="")
+    add_book_parser.set_defaults(func=add_book)
