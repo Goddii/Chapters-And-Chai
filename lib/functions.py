@@ -104,7 +104,19 @@ def add_member(args):
     member = Member(args.name, args.email)
     members.append(member)
     save_members(members)
-    console.print(f"[green]Added member:[/green] {member}")    
+    console.print(f"[green]Added member:[/green] {member}")
+
+ def list_members(args):
+    """CLI action: list members."""
+    table = Table(title="Members")
+    table.add_column("Name")
+    table.add_column("Email")
+    table.add_column("Books")
+
+    for member in load_members():
+        table.add_row(member.name, member.email, str(len(member.books)))
+
+    console.print(table)       
 
 
 
