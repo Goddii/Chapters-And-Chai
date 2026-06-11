@@ -144,9 +144,27 @@ def add_book(args):
     console.print(f"[green]Added book:[/green] {book}")
 
 
-def add_book(args):
-    # cli action to add a book for a member
-    pass                    
+def list_books(args):
+    """CLI action: list books."""
+    books = load_books()
+    if args.member:
+        books = [book for book in books if book.member.lower() == args.member.lower()]
+
+    table = Table(title="Books")
+    for heading in ["Title", "Author", "Member", "Genre", "Due Date", "Reviews"]:
+        table.add_column(heading)
+
+    for book in books:
+        table.add_row(
+            book.title,
+            book.author,
+            book.member,
+            book.genre or "-",
+            book.due_date or "-",
+            str(len(book.reviews)),
+        )
+
+    console.print(table)                  
 
 
 
