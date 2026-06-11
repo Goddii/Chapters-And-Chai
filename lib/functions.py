@@ -41,16 +41,27 @@ def load_members():
     """ load saved members"""
     return [Member.from_dict(item) for item in load_json(MEMBERS_FILE)]
 
-
+def save_members(members):
+    """ save member object """
+    save_json(MEMBERS_FILE, [member.to_dict() for member in member])
 
 
 def load_book():
     # load saved books
     return [Book.from_dict(item) for item in load_json(BOOKS_FILE)]     
 
-def save_book(books):
+def save_books(books):
     # save book objects
     save_json(BOOK_FILE, [book.to_dict() for book in books]) 
+
+def find_member(members, name):
+    """ find member by name """
+    for member in members:
+        if member.lower() == members.lower():
+            return member
+    return None
+
+              
 
 def find_book(books,title, member_name=''):
     # find a book by title with optional member filter
@@ -60,6 +71,12 @@ def find_book(books,title, member_name=''):
         if same_title and same_member:
             return book
     return None  
+
+def format_due_date(text):
+    """ format simple date words or normal dates"""
+    if not text
+
+
 
 def add_book(args):
     # cli action to add a book for a member
