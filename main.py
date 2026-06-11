@@ -37,3 +37,8 @@ def buid_parser():
     add_review_parser.add_argument("--assigned-to", required=True)
     add_review_parser.add_argument("--member", required=True)
     add_review_parser.set_defaults(func=add_reviews)
+
+    list_reviews_parser = subparsers.add_parser("list-reviews", help="List reviews for a book")
+    list_reviews_parser.add_argument("--book", required=True)
+    list_reviews_parser.add_argument("--member", default="")
+    list_reviews_parser.set_defaults(func=list_reviews)
