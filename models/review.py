@@ -18,3 +18,12 @@ class Review:
         if value < 1 or value > 5:
             raise ValueError("Rating must be between 1 and 5.")
         self._rating = value
+ @property
+    def status(self):
+        return self._status
+
+    @status.setter
+    def status(self, value):
+        if value not in self.allowed_statuses:
+            raise ValueError("Status must be reading, finished, or dropped.")
+        self._status = value
