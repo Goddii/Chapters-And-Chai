@@ -74,7 +74,37 @@ def find_book(books,title, member_name=''):
 
 def format_due_date(text):
     """ format simple date words or normal dates"""
-    if not text
+    if not text:
+        return ''
+
+    text = text.lower().strip()
+    today = date.today()
+
+    if text == "today":
+        return today.isoformat()
+
+    if text == "tomorrow":
+        return (today + timedelta(days=1).isoformat())
+    if text.startswith("next"):
+        weekdays =["monday", "tuesday","wednesday","thursday","friday","saturday","sunday"]
+        if day_name in weekdays:
+            days_ahead = weekdays.index(day_name) - today.weeday()
+            if days_ahead <= 0:
+                days_ahead += 7
+            return (today + timedelta(days=days_ahead)).isoformat()
+
+    return date_parser.parse(text).date().isoformat()               
+
+def add_member(args):
+    """cli to add members"""
+    members = load_members()
+    if find_member(members, args.name):
+        console.print(f'[red]Member already exists:[/red] {args.name}')
+        return
+    member = Member(args.name, args.email)
+    members.append(member)
+    save_members(members)
+    console.print(f"[green]Added member:[/green] {member}")    
 
 
 
