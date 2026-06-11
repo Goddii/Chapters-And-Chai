@@ -42,3 +42,8 @@ def buid_parser():
     list_reviews_parser.add_argument("--book", required=True)
     list_reviews_parser.add_argument("--member", default="")
     list_reviews_parser.set_defaults(func=list_reviews)
+
+    complete_book_parser = subparsers.add_parser("complete-book", help="Mark a book as finished")
+    complete_book_parser.add_argument("--book", required=True)
+    complete_book_parser.add_argument("--member", required=True)
+    complete_book_parser.set_defaults(func=complete_book)
