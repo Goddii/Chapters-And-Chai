@@ -30,3 +30,11 @@ class Review:
  def mark_finished(self):
         """Mark this review/book as finished."""
         self.status = "finished"
+def to_dict(self):
+        """Convert a Review object into a dictionary for JSON saving."""
+        return {
+            "rating": self.rating,
+            "notes": self.notes,
+            "status": self.status,
+            "assigned_to": self.assigned_to,
+        }
