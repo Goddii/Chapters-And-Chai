@@ -74,7 +74,7 @@ Member  ──(one-to-many)──▶  Book  ──(one-to-many)──▶  Review
 **1. Clone the repository**
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Goddii/Chapters-And-Chai
 cd chapters-and-chai
 ```
 
