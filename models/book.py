@@ -23,3 +23,13 @@ class Book:
 
     def add_review(self, review):
         self.reviews.append(review)
+
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "author": self.author,
+            "member": self.member,
+            "due_date": self.due_date,
+            "genre": self.genre,
+            "reviews": [review.to_dict() for review in self.reviews],
+        }
